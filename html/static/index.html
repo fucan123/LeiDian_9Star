@@ -1,0 +1,337 @@
+<!Doctype html>
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+    <title>Web UI</title>
+    <meta charset="gb2312">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="./main.css">
+    <script src="../layui/layui.all.js"></script>
+    <script src="./main.js"></script>
+</head>
+<body>
+    <div id="test"></div>
+    <div id="full" style="display:none;position:absolute; background:#000000; z-index:998;width:100%;opacity:0.5;filter: alpha(opacity=50);"></div>
+    <div id="tips_box" class="tips_box"></div>
+    <div style="width:500px;margin:0 auto;">
+        <div id="card_setting" class="setting_div" style="display:none;">
+            <ul class="setting_ul" style="min-height:130px;">
+                <li class="title">
+                    <i class="layui-icon">&#xe66e;</i> 请输入卡号
+                    <a href="javascript:HideSetting();" class="close" style="margin-left:330px;"><i class="layui-icon">&#x1006;</i></a>
+                </li>
+                <li style="margin-top:20px;">
+                    <input type="text" id="card_input" name="card_value" style="width:100%; height:26px; line-height:26px;" />
+                </li>
+            </ul>
+            <div class="r" style="padding:0 20px 20px;">
+                <!--layui-btn-primary 无背景按钮-->
+                <button id="card_btn" type="button" class="layui-btn layui-btn-normal layui-btn-sm" onclick="VerifyCard(this);">确定</button>
+            </div>
+        </div>
+        <div id="basic_setting" class="setting_div" style="display:none;">
+            <ul class="setting_ul">
+                <li class="title">
+                    <i class="layui-icon">&#xe620;</i> 基本设置
+                    <a href="javascript:HideSetting();" class="close"><i class="layui-icon">&#x1006;</i></a>
+                </li>
+                <li>
+                    <label>
+                        <span class="content">
+                            <input type="text" name="login_timeout" value="180" />
+                            <i>(多少秒后还未登录成功, 重新登录)</i>
+                        </span>
+                        <span class="title">登录超时 :</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="content">
+                            <input type="text" name="qiazhu" value="30" />
+                            <i>(卡住多少秒后, 自动重新登录游戏)</i>
+                        </span>
+                        <span class="title">卡住重启 :</span>
+                    </label>
+                </li>
+                <li class="short_input">
+                    <label>
+                        <span class="content">
+                            <input type="text" name="shutdown_sh" />点<input type="text" name="shutdown_sm" />分
+                            <span class="ml5 red">至</span>
+                            <input type="text" name="shutdown_eh" class="ml5" />点<input type="text" name="shutdown_em" />分
+                            <i>(定时关机)</i>
+                        </span>
+                        <span class="title">定时关机 :</span>
+                    </label>
+                </li>
+                <li class="short_input">
+                    <label>
+                        <span class="content">
+                            <input type="text" name="offline_sh" />点<input type="text" name="offline_sm" />分
+                            <span class="ml5 red">至</span>
+                            <input type="text" name="offline_eh" class="ml5" />点<input type="text" name="offline_em" />分
+                            <i>(定时下线)</i>
+                        </span>
+                        <span class="title">定时下线 :</span>
+                    </label>
+                </li>
+                <li class="short_input">
+                    <label>
+                        <span class="content">
+                            <input type="text" name="autologin_sh" />点<input type="text" name="autologin_sm" />分
+                            <span class="ml5 red">至</span>
+                            <input type="text" name="autologin_eh" class="ml5" />点<input type="text" name="autologin_em" />分
+                            <i>(定时登录)</i>
+                        </span>
+                        <span class="title">定时登陆 :</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="">
+                        <span class="content">
+                            <input type="checkbox" name="no_auto_select" class="checkbox" />
+                            <i>(不自动选择游戏区和登录游戏帐号)</i>
+                        </span>
+                        <span class="title">手动选区 :</span>
+                    </label>
+                </li>
+                <li>
+                    <label class="">
+                        <span class="content">
+                            <input type="checkbox" name="is_debug" class="checkbox" />
+                            <i>(是否显示调试信息, 即是否显示黑窗口)</i>
+                        </span>
+                        <span class="title">调试信息 :</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="r" style="padding:0 20px 20px;">
+                <!--layui-btn-primary 无背景按钮-->
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" onclick="SaveSetting('basic_setting');">确定</button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="HideSetting();">取消</button>
+            </div>
+        </div>
+        <div id="talk_setting" class="setting_div" style="display:none;">
+            <ul class="setting_ul">
+                <li class="title">
+                    <i class="layui-icon">&#xe620;</i> 喊话设置
+                    <a href="javascript:HideSetting();" class="close"><i class="layui-icon">&#x1006;</i></a>
+                </li>
+                <li>
+                    <label>
+                        <span class="content">
+                            <input type="text" name="talk_content" value="" data-string="1" style="width:350px;" />
+                            <i></i>
+                        </span>
+                        <span class="title">喊话内容 :</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="content">
+                            <input type="text" name="talk_intval" value="120" />
+                            <i>(喊话间隔, 多少秒喊一次)</i>
+                        </span>
+                        <span class="title">喊话间隔 :</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="content">
+                            <input type="checkbox" name="talk_open" class="checkbox" />
+                            <i>(是否开启自动喊话,如果在进游戏之前开启,那么不会执行副本流程)</i>
+                        </span>
+                        <span class="title">喊话开启 :</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="content">
+                            <select name="talk_type">
+                                <option value="1">公共频道</option>
+                            </select>
+                            <i>(在哪个频道喊话)</i>
+                        </span>
+                        <span class="title">喊话频道 :</span>
+                    </label>
+                </li>
+            </ul>
+            <div class="r" style="padding:0 20px 20px;">
+                <!--layui-btn-primary 无背景按钮-->
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" onclick="SaveSetting('talk_setting')">确定</button>
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-sm" onclick="HideSetting();">取消</button>
+            </div>
+        </div>
+    </div>
+    <ul id="table_1_menu" class="menu">
+        <li><i class="layui-icon">&#xe605;</i> 打开游戏</li>
+        <li><i class="layui-icon">&#x1006;</i> 关闭游戏</li>
+        <li style="border:0;"><i class="layui-icon">&#xe66c;</i> 已经入队</li>
+    </ul>
+    <div id="r_tool" class="r_tool"
+            onclick="ShowLog('log', 'r_tool', 'log_ul')"
+            onmouseover="SetClass('r_tool', 'r_tool_hover', '')" onmouseout="SetClass('r_tool', 'r_tool', 'r_tool_hover')">
+        显<br />示<br /><i class="layui-icon">&#xe603;</i><br />日<br />记<br />
+    </div>
+    <div id="status" class="status">
+        <span id="status_text"></span>
+        <span style="float:right;margin-right:20px;">
+            <span>启动时间: </span>
+            <span id="start_time">0小时00分00秒</span>
+        </span>
+    </div>
+    <div id="log" class="log" data-visable="0">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend class="fz14" style="color:#666666;"><i class="layui-icon">&#xe702;</i> 日记信息</legend>
+        </fieldset>
+        <ul id="log_ul" class="log_ul scrool_y"></ul>
+    </div>
+
+    <main>
+        <div class="recharge">
+            <span class="ml5">
+                本次/累计: <b id="fb_count" class="red">0/0</b>
+            </span>
+            <a href="javascript:;" onclick="ShowSetting('card_setting', 150);" style="margin-left:20px;">输入卡号</a>
+            <span id="card_date" class="ml5 c9">未激活</span>
+        </div>
+        <div class="recharge mt10">
+            <!--启动时长:  <span id="start_time" class="c0">0小时00分00秒</span>，-->
+            本次时长:  <span id="fb_time_long" class="c0">0小时00分00秒</span>，
+            累计时长:  <span id="fb_time_long_all" class="c0">0小时00分00秒</span>
+        </div>
+        <fieldset class="layui-elem-field site-demo-button">
+            <legend class="fz14"><i class="layui-icon">&#xe66f;</i> 帐号列表</legend>
+            <div style="margin: 10px 10px 10px 10px;">
+                <table class="table">
+                    <colgroup>
+                        <col width="50" />
+                        <col width="250" />
+                        <col width="135" />
+                        <col width="135" />
+                        <col />
+                    </colgroup>
+                    <thead>
+                        <tr class="th">
+                            <th>序号</th>
+                            <th>帐号</th>
+                            <th>状态</th>
+                            <th>在线时长</th>
+                            <th>最近通信</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="scrool_y" style="height:376px;">
+                    <table id="table_1" class="table">
+                        <colgroup>
+                            <col width="50" />
+                            <col width="250" />
+                            <col width="135" />
+                            <col width="135" />
+                            <col />
+                        </colgroup>
+                        <tbody>
+                            <!--<tr><td>1</td><td>贤心</td><td>2016-11-29</td> <td>人生就像是一场修行</td></tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </fieldset>
+        <!--<div class="h3 mt5"><i class="layui-icon">&#xe66f;</i>  帐号列表</div>-->
+
+        <fieldset class="layui-elem-field site-demo-button">
+            <legend class="fz14"><i class="layui-icon">&#xe620;</i> 设置</legend>
+            <div class="setting" id="setting_btn">
+                <a href="javascript:;" onclick="ShowSetting('basic_setting', 300);">基本设置</a> |
+                <a href="javascript:;" onclick="ShowSetting('talk_setting', 300);">喊话设置</a> |
+                <a href="javascript:;" id="update_btn" class="update_btn" onclick="UpdateVer(this)">
+                    检查更新<i class="layui-icon">&#xe607;</i>
+                </a>
+            </div>
+            <div class="hr setting"></div>
+            <div class="setting_radio">
+                <span class="t">副本模式:</span>
+                <label class="ml10 tips" data-text="此模式，表示每个号登入刷副本之前会先领项链">
+                    <input type="radio" name="fb_mode" value="1" checked /> 边领边刷
+                </label>
+                <label class="ml10 tips" data-text="此模式，表示每个号只刷副本不领项链">
+                    <input type="radio" name="fb_mode" value="2" /> 不领只刷
+                </label>
+                <label class="ml10 tips" data-text="此模式，表示全部号先领完项链再刷副本">
+                    <input type="radio" name="fb_mode" value="3" /> 先领后刷
+                </label>
+                <label class="ml10 tips" data-text="此模式，表示只领项链不刷副本">
+                    <input type="radio" name="fb_mode" value="4" /> 只领不刷
+                </label>
+            </div>
+        </fieldset>
+
+        <div class="r pr10">
+            <a class="my_ck_box tips vb" data-text="如果勾选, 那么启动登入前会关闭所有模拟器；若不能打开模拟器时, 请勾选" href="javascript:;">
+                <i class="layui-icon" data-key="close_mnq"></i> 关闭模拟器
+            </a>
+            <!--layui-btn-primary 无背景按钮-->
+            <button id="start_btn" type="button" class="layui-btn layui-btn-normal" onclick="_c.Call('start')">启动</button>
+            <button id="auto_play_btn" type="button" class="layui-btn layui-btn-primary" onclick="_c.Call('auto_play', $(this).html())">自动登号</button>
+        </div>
+    </main>
+    <script>
+        ShowTool("r_tool", 0);
+        SetMarginLeftClientWidth('log');
+        SetClientHeight("log_ul", 30);
+
+        /*
+        for (var i = 1; i < 106; i++) {
+            AddTableRow("table_1", 0, i);
+            AddLog("log_ul", i, "green");
+        }
+        // FillTableRow("table_1", 0, 0);
+
+        AddLog("log_ul", "日记信息");
+        UpdateStatusText("加载完成.", 2);
+
+        SetSetting('qiazhu', 168);
+        */
+    </script>
+    <div id="xxx"></div>
+    <script>
+        var colors = [
+            0xFF8EC140, 0xFF8FC241, 0xFF51900E, 0xFF4C8B09, 0xFF5B8112, 0xFF608617, 0xFF84971A, 0xFFAEC144, 0xFFA7BB1B, 0xFFC3D737,
+            0xFF7BB32C, 0xFF72AA23, 0xFF4D9213, 0xFF4B9011, 0xFF548617, 0xFF57891A, 0xFF6F8F10, 0xFFABCB4C, 0xFFAFCF22, 0xFFCDED40,
+            0xFF5C940D, 0xFF528A03, 0xFF4A8F10, 0xFF4F9415, 0xFF57891A, 0xFF5C8E1F, 0xFF6A8A0B, 0xFF99B93A, 0xFFA9C91C, 0xFFBBDB2E,
+            0xFF4E8800, 0xFF548E06, 0xFF4C8E12, 0xFF56981C, 0xFF568B17, 0xFF5C911D, 0xFF618B05, 0xFF7CA620, 0xFFA3C914, 0xFFABD11C,
+            0xFF488200, 0xFF609A12, 0xFF4F9115, 0xFF5A9C20, 0xFF558A16, 0xFF5A8F1B, 0xFF608A04, 0xFF709A14, 0xFFABD11C, 0xFFB2D823,
+            0xFF508906, 0xFF548D0A, 0xFF5A9018, 0xFF5D931B, 0xFF609513, 0xFF5C910F, 0xFF629000, 0xFF6E9C08, 0xFF90B503, 0xFFA6CB19,
+            0xFF548D0A, 0xFF558E0B, 0xFF568C14, 0xFF568C14, 0xFF5C910F, 0xFF609513, 0xFF689602, 0xFF6C9A06, 0xFF86AB00, 0xFF9BC00E,
+            0xFF558B0F, 0xFF558B0F, 0xFF609018, 0xFF62921A, 0xFF69A10A, 0xFF76AE17, 0xFF7DB70D, 0xFF7DB70D, 0xFF90BA0E, 0xFF9BC519,
+            0xFF568C10, 0xFF588E12, 0xFF609018, 0xFF6D9D25, 0xFF7BB31C, 0xFF88C029, 0xFF94CE24, 0xFF9BD52B, 0xFFA4CE22, 0xFF9EC81C,
+            0xFF5A8B18, 0xFF5C8D1A, 0xFF538A0B, 0xFF6DA425, 0xFF79C211, 0xFF7CC514, 0xFF88D611, 0xFF98E621, 0xFF9AD32C, 0xFF82BB14
+        ];
+        var colors2 = [
+            0xFF9053B0, 0xFFCA8DEA, 0xFFC187DB, 0xFF8B51A5, 0xFFB885CA, 0xFFBE8BD0, 0xFFAE7EB8, 0xFF94649E, 0xFF7C4D83, 0xFF805187,
+            0xFF763599, 0xFFB271D5, 0xFFBF83DB, 0xFF9C60B8, 0xFF7E4893, 0xFFB983CE, 0xFFC090CE, 0xFFA575B3, 0xFF8B5B95, 0xFF895993,
+            0xFFB776DA, 0xFFD190F4, 0xFFC387DF, 0xFFC68AE2, 0xFF5F2974, 0xFFCC96E1, 0xFFBE8ECC, 0xFF9B6BA9, 0xFF9767A1, 0xFF8D5D97,
+            0xFFCE8BF2, 0xFFDF9CFF, 0xFFDFA2FF, 0xFFDEA1FE, 0xFF652F7B, 0xFFC08AD6, 0xFFBA89CA, 0xFFA776B7, 0xFF9868A4, 0xFF83538F,
+            0xFFE5A2FF, 0xFFC784EB, 0xFFC78AE7, 0xFFB174D1, 0xFF87519D, 0xFFC690DC, 0xFFC695D6, 0xFF9D6CAD, 0xFF9868A4, 0xFF7A4A86,
+            0xFFC996E1, 0xFFA875C0, 0xFFAE7DBE, 0xFFA473B4, 0xFFAF7EB5, 0xFFA574AB, 0xFFE7B6EE, 0xFFE4B3EB, 0xFFCC9EDF, 0xFFC496D7,
+            0xFFAF7CC7, 0xFFA976C1, 0xFFB07FC0, 0xFFAD7CBD, 0xFFF5C4FB, 0xFFB685BC, 0xFFBC8BC3, 0xFFDDACE4, 0xFFE4B6F7, 0xFFE2B4F5,
+            0xFFE6BFF6, 0xFFB790C7, 0xFFAD85BA, 0xFFBB93C8, 0xFFF7CCFF, 0xFFC89DD3, 0xFFA476B4, 0xFFAE80BE, 0xFFCFA1E9, 0xFFCD9FE7,
+            0xFFFFDDFF, 0xFFFFDDFF, 0xFFD5ADE2, 0xFFA47CB1, 0xFFB186BC, 0xFFDCB1E7, 0xFFB789C7, 0xFF9D6FAD, 0xFFD6A8F0, 0xFFCA9CE4,
+            0xFFEBD4F0, 0xFFFFECFF, 0xFFFFE7FF, 0xFFFFEEFF, 0xFFFFEEFF, 0xFFAC89BF, 0xFF6F468C, 0xFFB289CF, 0xFFBB8FDC, 0xFFB286D3,
+        ]
+
+        for (var y = 0; y < 10; y++) {
+            var html = '<div>';
+            for (var x = 0; x < 10; x++) {
+                var color = (colors2[y * 10 + x] & 0x00ffffff).toString(16).toUpperCase();
+                //color = 'FF5050';
+                html += "<span style='color:#" + color + "'>0x" + color +"</span> ";
+            }
+            html += "</div>";
+            //$('#xxx').append(html);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Web">
+      <UniqueIdentifier>{eac069a8-27c3-4caa-80c4-1339ef70fe87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="html">
+      <UniqueIdentifier>{e6a4109b-3ac0-4ede-bda4-a8329528b55f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{6f918442-2ae5-4572-9539-daa9b4d51ca5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WebUI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="WebUIDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Web\CWebBrowser2.h">
+      <Filter>Web</Filter>
+    </ClInclude>
+    <ClInclude Include="Web\JsCall.h">
+      <Filter>Web</Filter>
+    </ClInclude>
+    <ClInclude Include="Web\WebList.h">
+      <Filter>Web</Filter>
+    </ClInclude>
+    <ClInclude Include="Web\JsCallCpp.h">
+      <Filter>Web</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\DownFile.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameServer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Home.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\HttpClient.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Driver.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameClient.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameProc.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameStep.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameData.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Magic.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Item.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Move.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameConf.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Pet.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Talk.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\PrintScreen.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Emulator.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\LookImgNum.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WebUI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WebUIDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Web\CWebBrowser2.cpp">
+      <Filter>Web</Filter>
+    </ClCompile>
+    <ClCompile Include="Web\JsCall.cpp">
+      <Filter>Web</Filter>
+    </ClCompile>
+    <ClCompile Include="Web\WebList.cpp">
+      <Filter>Web</Filter>
+    </ClCompile>
+    <ClCompile Include="Web\JsCallCapp.cpp">
+      <Filter>Web</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\DownFile.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameServer.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Home.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\HttpClient.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Driver.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameClient.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameProc.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameStep.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameData.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Magic.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Item.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Move.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\GameConf.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Pet.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Talk.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\PrintScreen.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Emulator.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\LookImgNum.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WebUI.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\WebUI.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\html\static\index.html">
+      <Filter>html</Filter>
+    </None>
+    <None Include="..\html\static\main.css">
+      <Filter>html</Filter>
+    </None>
+    <None Include="..\html\static\main.js">
+      <Filter>html</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\WebUI.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bitmap2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

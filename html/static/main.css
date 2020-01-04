@@ -1,0 +1,350 @@
+body {
+    color:#666;
+    font-size:14px;
+    zoom:100%;
+}
+
+body .layui-field-title {
+    margin: 5px 0 5px;
+    /*color: #009688;*/
+}
+
+body .layui-elem-field legend {
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0;
+    color: #222222;
+}
+
+.hr {
+    height:1px;
+    border-bottom:1px #bbbbbb dotted;
+}
+
+.tips_box {
+    display: none;
+    position: absolute;
+    padding: 3px 10px 3px 10px;
+    background: #ffffff;
+    color: #FF5722;
+    border: 1px #FF5722 solid;
+    border-radius: 3px;
+    font-size: 12px;
+    z-index: 999;
+    white-space: nowrap;
+}
+
+.my_ck_box {
+    font-size:12px;
+}
+.my_ck_box .layui-icon {
+    display:inline-block;
+    width:15px;
+    height:15px;
+    border:1px #bbb solid;
+}
+
+.h3 {
+    font-size: 16px;
+    font-weight: bold;
+    height: 23px;
+    line-height: 23px;
+    border-bottom: 1px #e2e2e2 solid;
+    padding-left: 5px;
+    color: #505050;
+}
+
+.scrool_y {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.menu {
+    display:none;
+    position:absolute;
+    background:#ffffff;
+    border:1px #e0e0e0 solid;
+}
+
+.menu li {
+    width:100px;
+    text-align:center;
+    height:30px;
+    line-height:30px;
+    border-bottom:1px #dddddd dotted;
+    cursor:pointer;
+}
+
+.menu li.disabled {
+    background: #dddddd;
+    color: #bbbbbb;
+    cursor: default;
+    border-bottom: 1px #cccccc solid;
+}
+
+.setting_div {
+    position:absolute;
+    background:#ffffff;
+    width:500px;
+    z-index:999;
+}
+
+.setting_ul {
+    min-height: 300px;
+}
+.setting_ul li {
+    padding-left:20px;
+    padding-right:20px;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px #dddddd dotted;
+}
+.setting_ul li.title {
+    background:#f0f0f0;
+    height:50px;
+    line-height:50px;
+    font-size:16px;
+    font-weight:bold;
+}
+.setting_ul li.title .close {
+    margin-left:350px;
+}
+.setting_ul li.title .layui-icon {
+    font-size:16px;
+}
+.setting_ul li input, .setting_ul li select {
+    width: 80px;
+    color: #009688;
+}
+.setting_ul li.short_input input {
+    width: 30px;
+}
+.setting_ul li select {
+    color:#666666;
+}
+.setting_ul li .checkbox {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+.setting_ul li .content {
+    position:absolute;
+    margin-left:80px;
+}
+.setting_ul li i {
+    font-style: normal;
+    font-size: 12px;
+    color: #999999;
+}
+
+.r_tool {
+    display: none;
+    position: fixed;
+    background: #f0f0f0;
+    padding: 10px 0 10px 0;
+    cursor: pointer;
+    width: 16px;
+    text-align: center;
+    color: #333333;
+    right: 0px;
+    z-index: 999;
+}
+
+.r_tool_hover {
+    background: #d0d0d0;
+    width: 26px;
+    color: #000000;
+}
+
+.status {
+    display:none;
+    position: fixed;
+    bottom: 0px;
+    padding-left: 10px;
+    background: #eeeeee;
+    width: 100%;
+    height: 26px;
+    line-height: 26px;
+}
+
+.log {
+    display: none;
+    position: absolute;
+    background: #fbfbfb;
+    width: 100%;
+    z-index: 998;
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+}
+.log_ul li {
+    height: 26px;
+    line-height: 26px;
+    padding-left: 10px;
+    border-bottom: 1px #e0e0e0 dotted;
+}
+
+.recharge {
+    text-align:right;
+    padding-right:10px;
+}
+.recharge a {
+    color: #009688;
+    text-decoration:underline;
+}
+.recharge a:hover {
+    color: red;
+}
+
+.table {
+    width: 100%;
+    color: #666;
+}
+.table td, .table th {
+    height: 30px;
+    vertical-align: middle;
+    border: 1px #e6e6e6 solid;
+    text-align: left;
+    padding-left: 10px;
+}
+.table .th {
+    background-color: #f2f2f2;
+}
+
+.setting {
+    margin: 10px 10px 10px 10px;
+    padding-left: 5px;
+}
+.setting a {
+    margin: 0 5px 0 5px;
+    color: #005599;    
+}
+.setting a:hover {
+    color: #1E9FFF;
+    text-decoration:underline;
+}
+.setting a.update_btn {
+    color: #009688;
+}
+.setting a.update_btn:hover {
+    color: red;
+    text-decoration:none;
+}
+.setting a.update_btn_ing {
+    cursor: text;
+    color: #BBBBBB;
+}
+.setting a.update_btn_ing:hover {
+    text-decoration: none;
+}
+.setting_radio {
+    margin: 10px 10px 10px 10px;
+    padding-left: 5px;
+}
+.setting_radio .t {
+    margin-left:5px;
+    font-weight:bold;
+    color:#000000;
+}
+
+.r {
+    text-align: right;
+}
+.c {
+    text-align: center;
+}
+.l {
+    text-align: left;
+}
+.vt {
+    vertical-align: top;
+}
+.vm {
+    vertical-align: middle;
+}
+.vb {
+    vertical-align:bottom;
+}
+.vtb {
+    vertical-align: text-bottom;
+}
+
+.bnone {
+    border:0;
+}
+
+.mt5 {
+    margin-top:5px;
+}
+.mt10 {
+    margin-top:10px;
+}
+.ml5 {
+    margin-left: 5px;
+}
+.ml10 {
+    margin-left: 10px;
+}
+
+.pt5 {
+    padding-top: 5px;
+}
+.pt10 {
+    padding-top: 10px;
+}
+.pl5 {
+    padding-left: 5px;
+}
+.pl10 {
+    padding-left: 10px;
+}
+.pr5 {
+    padding-right: 5px;
+}
+.pr10 {
+    padding-right: 10px;
+}
+.pb5 {
+    padding-bottom: 5px;
+}
+.pb10 {
+    padding-bottom: 10px;
+}
+
+.c0 {
+    color:#000000;
+}
+.c3 {
+    color: #333333;
+}
+.c6 {
+    color: #666666;
+}
+.c9 {
+    color: #999999;
+}
+.cb {
+    color: #bbbbbb;
+}
+.gray {
+    color:#999999;
+}
+.red {
+    color:red;
+}
+.green {
+    color:#009688;
+}
+.blue {
+    color:#005599;
+}
+
+.fz12 {
+    font-size:12px;
+}
+.fz14 {
+    font-size:14px;
+}
+.fz16 {
+    font-size:16px;
+}
