@@ -35,7 +35,7 @@ void GameData::WatchGame()
 
 			ZeroMemory(&m_DataAddr, sizeof(m_DataAddr));
 			m_hGameProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, m->VBoxPid);
-			printf("%s 读取[%s(%d)]数据\n", m->Account->Name, m->Name, m->VBoxPid);
+			printf("%s读取[%s(%d)]数据\n", m->Account->Name, m->Name, m->VBoxPid);
 			ReadGameMemory();
 
 			if (m_DataAddr.Player) {

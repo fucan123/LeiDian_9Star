@@ -42,8 +42,17 @@ public:
 	// 关闭练功场领取经验框
 	void CloseLGCBox();
 
+	// 社交信息框打开否
+	bool SheJiaoBoxIsOpen();
 	// 等待社交信息框打开
 	bool WaitForSheJiaoBox(DWORD ms = 2000);
+	// 关闭社交信息框
+	void CloseSheJiaoBox(bool is_check=false);
+
+	// 是否在登录画面
+	bool IsInLoginPic(HWND hwnd=NULL);
+	// 等待进入登录画面
+	bool WaitForInLoginPic(HWND hwnd=NULL, DWORD ms = 15000);
 
 	// 是否在游戏画面 没有其他弹层
 	bool IsInGamePic();

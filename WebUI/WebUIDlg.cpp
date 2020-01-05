@@ -160,8 +160,8 @@ BOOL CWebUIDlg::OnInitDialog()
 	freopen("CON", "w", stdout);
 #endif
 #ifdef  _DEBUG
-	AllocConsole();
-	freopen("CON", "w", stdout);
+	//AllocConsole();
+	//freopen("CON", "w", stdout);
 
 	SHGetSpecialFolderPathA(0, m_ConfPath, CSIDL_DESKTOPDIRECTORY, 0);
 	strcat(m_ConfPath, "\\MNQ-9Star");

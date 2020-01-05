@@ -17,7 +17,7 @@ Home::Home()
 	MachineID mac;
 	mac.GetMachineID(m_MachineId);
 	m_MachineId[32] = 0;
-	printf("机器码:%s\n", m_MachineId);
+	//printf("机器码:%s\n", m_MachineId);
 }
 
 // 设置是否免费
@@ -31,7 +31,7 @@ bool Home::IsValid()
 #ifdef _DEBUG
 	return true;
 #endif
-#if 0
+#if 1
 	if (m_bFree)
 		return true;
 #endif
@@ -42,7 +42,7 @@ bool Home::IsValid()
 	if (now_time < m_iVerifyTime) { // 当前时间比验证时间还早 可能修改了系统时间
 		return false;
 	}
-	printf("%d --- %d(%d)\n", now_time, m_iEndTime, m_iEndTime - now_time);
+	//printf("%d --- %d(%d)\n", now_time, m_iEndTime, m_iEndTime - now_time);
 	return now_time <= m_iEndTime;
 }
 

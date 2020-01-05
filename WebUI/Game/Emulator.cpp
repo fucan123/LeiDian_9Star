@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Emulator.h"
 #include "PrintScreen.h"
+#include "Talk.h"
 #include "GameProc.h"
 #include <time.h>
 #include <My/Common/Explode.h>
@@ -190,6 +191,7 @@ void Emulator::CloseAll()
 // 启动游戏
 void Emulator::StartGame(int index)
 {
+	printf("启动游戏APP\n");
 	char cmd[128] = { 0 };
 	sprintf_s(cmd, "runapp --index %d --packagename \"com.nd.myht\"", index);
 	ExecCmd(cmd, nullptr, 0);
@@ -198,6 +200,7 @@ void Emulator::StartGame(int index)
 // 等待进入游戏
 void Emulator::CloseGame(int index)
 {
+	printf("关闭游戏APP\n");
 	char cmd[128] = { 0 };
 	sprintf_s(cmd, "killapp --index %d --packagename \"com.nd.myht\"", index);
 	ExecCmd(cmd, nullptr, 0);
@@ -217,8 +220,7 @@ void Emulator::WatchInGame(_account_* account)
 	bool is_print = false;
 	MNQ* m = account->Mnq;
 	while (true) {
-		printf("获取模拟器列表(%d)\n", time(nullptr));
-		List2();
+		//printf("获取模拟器列表(%d)\n", time(nullptr));
 		//printf("获取模拟器列表完成(%d)\n", time(nullptr));
 
 		if (!m->Init) { // 未初始化好
@@ -226,9 +228,11 @@ void Emulator::WatchInGame(_account_* account)
 				Close(m->Index);
 				Sleep(1000);
 				Open(m->Index);
+				break;
 			}
 			//printf("没有初始化好(%d)\n", time(nullptr));
 			Sleep(3500);
+			List2();
 			continue;
 		}
 
@@ -246,14 +250,12 @@ void Emulator::WatchInGame(_account_* account)
 			// 多线程等待其他操作完毕
 			while (m_pGame->m_pPrintScreen->IsLocked());
 			m_pGame->m_pPrintScreen->Lock();
-			// 截取弹框确定按钮图片
-			m_pGame->m_pPrintScreen->CopyScreenToBitmap(m->Wnd, 1205, 140, 1220, 155, 0, true);
-			int compare_count = m_pGame->m_pPrintScreen->ComparePixel("登录按钮", nullptr, 1);
+			bool in_login_pic = m_pGame->m_pTalk->IsInLoginPic(m->Wnd);
 			//m_pGame->m_pPrintScreen->GetPixelCount(0x00, 0, true);
 			Sleep(500);
 			m_pGame->m_pPrintScreen->UnLock();
 			
-			if (compare_count > 0) {
+			if (in_login_pic) {
 				printf("%s已进入登录界面\n", account->Name);
 				m_pGame->SetStatus(m->Account, ACCSTA_LOGIN, true); // 设置登录状态
 
@@ -371,7 +373,7 @@ _end_:
 	if (!m_pGame->AutoLogin())
 		LOGVARN2(64, "blue", "已全部登入游戏");
 #endif
-
+	printf("已登录完成\n");
 	return;
 }
 

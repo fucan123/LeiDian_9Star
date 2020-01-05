@@ -166,7 +166,7 @@ void GameServer::InGame(_account_* p, const char* data, int len)
 	memcpy(p->Role, role, strlen(role));
 	LOGVARP(log, "%s[%s] 已登入游戏", p->Name, p->Role);
 end:
-	if (!m_pGame->AutoLogin()) {
+	if (!m_pGame->AutoLogin("GameServer::InGame")) {
 		m_pGame->LoginCompleted();
 		//m_pGame->m_pUIWnd->m_pLoginBtn->SetText("自动登号");
 		//m_pGame->m_pUIWnd->m_pStartBtn->SetEnabled(true);
@@ -588,13 +588,13 @@ void GameServer::OnClose(SOCKET client, int index)
 			if (next) { // 自动登录下一个号
 				printf("下一个要登录的帐号:%s:%d %08X\n", next->Name, next->Index, next->Status);
 				self->m_pGame->SetLoginFlag(next->Index);
-				self->m_pGame->AutoLogin();
+				self->m_pGame->AutoLogin("GameServer::OnClose:下一个");
 			}
 			else if (self->m_pGame->m_Setting.LogoutByGetXL && !self->m_pGame->m_Setting.NoPlayFB) { // 已领完
 				self->m_pGame->m_Setting.LogoutByGetXL = 0;
 				self->m_pGame->SetAllStatus(ACCSTA_INIT);
 				self->m_pGame->SetLoginFlag(-1);
-				self->m_pGame->AutoLogin();
+				self->m_pGame->AutoLogin("GameServer::OnClose::领项链");
 			}
 			return;
 		}
@@ -606,7 +606,7 @@ void GameServer::OnClose(SOCKET client, int index)
 
 		if (self->m_pGame->IsAutoLogin() && p->OfflineLogin && self->m_pGame->m_Setting.ReConnect) {
 			self->m_pGame->SetLoginFlag(p->Index);
-			self->m_pGame->AutoLogin();
+			self->m_pGame->AutoLogin("GameServer::OnClose::关闭后重新登录");
 		}
 	}
 }

@@ -70,14 +70,14 @@ public:
 	void GoFBDoor(_account_* account);
 	// 开启副本
 	_account_* OpenFB();
+	// 出副本
+	void OutFB(_account_* account);
 	// 获取开启副本帐号
 	_account_* GetOpenFBAccount();
 	// 是否由大号开启副本
 	bool IsBigOpenFB();
 	// 继续副本
 	void ContinueInFB();
-	// 出副本
-	void GoOutFB(const char* name, bool notify=true, bool reborn=true);
 	// 是否在副本
 	bool IsInFB(_account_* account=nullptr);
 	// 执行副本流程
@@ -224,6 +224,8 @@ public:
 	bool m_bIsResetRecordStep = false;
 	// 是否第一次移动, 需要点一下地图
 	bool m_bIsFirstMove = true;
+	// 是否重开副本
+	bool m_bReOpenFB = false;
 
 	// 重新移动次数
 	int m_nReMoveCount = 0;
@@ -235,6 +237,8 @@ public:
 	int m_nLiveYaoBao = 6;
 	// 药留存数量
 	int m_nLiveYao = 3;
+	// 重开副本次数
+	int m_nReOpenFBCount = 0;
 	// 刷副本次数
 	int m_nPlayFBCount = 0;
 	// 已经计数时间

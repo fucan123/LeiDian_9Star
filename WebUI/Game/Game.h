@@ -116,7 +116,7 @@ public:
 	// 输入帐号密码登录
 	void Input(Account* p);
 	// 自动登号
-	bool AutoLogin();
+	bool AutoLogin(const char* remark);
 	// 全部登完
 	void LoginCompleted();
 	// 设置登号类型
@@ -206,6 +206,8 @@ public:
 	// 更新刷副本时长
 	void UpdateDBFBTimeLong(int time_long);
 
+	// 更新重开副本次数
+	void UpdateReOpenFBCount(int count);
 	// 更新刷副本次数文本
 	void UpdateFBCountText(int lx, bool add=true);
 	// 更新刷副本时长文本
@@ -278,6 +280,8 @@ public:
 		int  InitTimeOut;    // 启动超时时间
 		int  LoginTimeOut;   // 登录超时允许时间
 		int  TimeOut;        // 游戏超时时间
+		int  FBTimeOut;      // 副本超时时间
+
 		int  ReConnect;      // 是否断线重连
 		int  AutoLoginNext;  // 是否自动登录帐号
 		int  LogoutByGetXL;  // 领完项链是否自动退出

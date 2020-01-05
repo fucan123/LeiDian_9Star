@@ -199,15 +199,57 @@ void Talk::CloseLGCBox()
 	}
 }
 
+// 社交信息框打开否
+bool Talk::SheJiaoBoxIsOpen()
+{
+	// 截取社交框
+	m_pGame->m_pPrintScreen->CopyScreenToBitmap(m_pGame->m_pGameProc->m_hWndGame, 366, 466, 376, 476, 0, true);
+	return m_pGame->m_pPrintScreen->ComparePixel("社交信息框", nullptr, 1) > 0;
+}
+
 // 等待社交信息框打开
 bool Talk::WaitForSheJiaoBox(DWORD ms)
 {
 	for (DWORD i = 0; i < ms; i += 100) {
-		m_pGame->m_pPrintScreen->CopyScreenToBitmap(m_pGame->m_pGameProc->m_hWndGame, 366, 466, 376, 476, 0, true);
-		if (m_pGame->m_pPrintScreen->ComparePixel("社交信息框", nullptr, 1) > 0)
+		if (SheJiaoBoxIsOpen())
 			return true;
 
 		Sleep(100);
+	}
+	return false;
+}
+
+// 关闭社交信息框
+void Talk::CloseSheJiaoBox(bool is_check)
+{
+	if (is_check && !SheJiaoBoxIsOpen())
+		return;
+
+	m_pGame->m_pGameProc->Click(933, 166, 935, 170); // 关闭
+	Sleep(500);
+}
+
+// 是否在登录画面
+bool Talk::IsInLoginPic(HWND hwnd)
+{
+	if (!hwnd)
+		hwnd = m_pGame->m_pGameProc->m_hWndGame;
+
+	// 右侧帐号图标
+	m_pGame->m_pPrintScreen->CopyScreenToBitmap(hwnd, 1205, 140, 1220, 155, 0, true);
+	return m_pGame->m_pPrintScreen->ComparePixel("登录按钮", nullptr, 1) > 0;
+}
+
+// 等待进入登录画面
+bool Talk::WaitForInLoginPic(HWND hwnd, DWORD ms)
+{
+	if (!hwnd)
+		hwnd = m_pGame->m_pGameProc->m_hWndGame;
+	for (DWORD i = 0; i < ms; i += 100) {
+		if (IsInLoginPic(hwnd))
+			return true;
+
+		Sleep(200);
 	}
 	return false;
 }

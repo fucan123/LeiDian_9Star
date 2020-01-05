@@ -118,7 +118,7 @@ void GameStep::SelectRandStep()
 			for (i = 0; i < MAX_STEP_FILES; i++) {
 				m_nStepRandListIndex[i] = i;
 			}
-			for (i = 10; i < m_nStepCount - 1; i++) { // 打乱
+			for (i = 0; i < m_nStepCount - 1; i++) { // 打乱
 				int index = MyRand(0, m_nStepCount - 1);
 				int tmp = m_nStepRandListIndex[i];
 				m_nStepRandListIndex[i] = m_nStepRandListIndex[index];
@@ -128,7 +128,6 @@ void GameStep::SelectRandStep()
 		}
 	}
 
-	m_nStepRandIndex = 3;
 	int index = m_nStepRandListIndex[m_nStepRandIndex];
 	//index = 3;
 	m_Step = m_StepList[index];
@@ -229,6 +228,7 @@ int GameStep::ParseStep(const char* data, Link<_step_*>& link)
 				result = -1;
 			}
 			TransFormPos(explode[2], step.X2, step.Y2);
+			//printf("流程->移动:%d.%d至%d.%d\n", step.X, step.Y, step.X2, step.Y2);
 			break;
 		case OP_NPC:
 			strcpy(step.NPCName, explode[1]);

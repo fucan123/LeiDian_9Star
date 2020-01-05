@@ -106,9 +106,13 @@ void Game::Run()
 		return;
 	}
 
+	while (!m_pGame->m_pHome->IsValid()) Sleep(1000);
+
 	m_pEmulator->List2();
 	m_pGameData->m_pAccoutBig = m_pBig; // 大号
 	m_pBig->IsLogin = 1;
+	//LogOut(m_pBig);
+	//while (true) Sleep(1000);
 	m_pGameData->WatchGame();
 
 	while (true) {
@@ -120,7 +124,7 @@ void Game::Run()
 
 	m_pGameProc->SwitchGameWnd(m_pBig->Mnq->Wnd);
 	m_pGameProc->SwitchGameAccount(m_pBig);
-	if (m_pGameData->IsInShenDian(m_pBig)) // 先离开神殿
+	if (1 && m_pGameData->IsInShenDian(m_pBig)) // 先离开神殿
 		m_pGameProc->GoLeiMing();
 
 	if (m_pGameProc->IsInFB()) {
@@ -296,12 +300,13 @@ void Game::LogOut(Account * account)
 	if (!account->Mnq)
 		return;
 
+	printf("\n退出登录.\n\n");
 	m_pEmulator->Tap(1206, 190, 1230, 215, account->Mnq->Index); // 右侧展开菜单
-	Sleep(1500);
+	Sleep(2000);
 	m_pEmulator->Tap(1208, 645, 1230, 670, account->Mnq->Index); // 设置
-	Sleep(1500);
+	Sleep(2500);
 	m_pEmulator->Tap(925, 575, 1035, 595, account->Mnq->Index);  // 退出登录
-	Sleep(1000);
+	Sleep(1500);
 	m_pEmulator->Tap(705, 426, 785, 450, account->Mnq->Index);   // 确定
 }
 
@@ -313,9 +318,9 @@ void Game::Input(Account* p)
 }
 
 // 自动登号
-bool Game::AutoLogin()
+bool Game::AutoLogin(const char* remark)
 {
-	printf("AutoLogin\n");
+	printf("AutoLogin:%s\n", remark);
 	char log[64];
 	if (!IsAutoLogin())
 		return false;
@@ -349,7 +354,7 @@ bool Game::AutoLogin()
 		return false;
 	if (IsLogin(p) || (p->IsBig && m_Setting.LogoutByGetXL)) { // 已在登录或已登录 或大号不领项链
 		m_iLoginIndex++;
-		return AutoLogin(); // 登录下一个
+		return AutoLogin("AutoLogin"); // 登录下一个
 	}
 
 	p->Mnq = nullptr;
@@ -981,6 +986,20 @@ void Game::UpdateDBFBTimeLong(int time_long)
 	}
 }
 
+// 更新重开副本次数
+void Game::UpdateReOpenFBCount(int count)
+{
+	char text[16];
+	sprintf_s(text, "%d",count);
+
+	my_msg2* msg = new my_msg2;
+	ZeroMemory(msg, sizeof(my_msg2));
+	strcpy(msg->id, "fb_reopen_count");
+	strcpy(msg->text, text);
+
+	PostMessage(m_hUIWnd, WM_USER + 100, (WPARAM)msg, 1);
+}
+
 // 更新刷副本次数文本
 void Game::UpdateFBCountText(int lx, bool add)
 {
@@ -1181,6 +1200,12 @@ void Game::ReadSetting(const char* data)
 		m_Setting.TimeOut = explode.GetValue2Int(1);
 		strcpy(tmp, "秒");
 	}
+	else if (strcmp(explode[0], "副本超时") == 0) {
+		m_Setting.FBTimeOut = explode.GetValue2Int(1);
+		m_pJsCall->SetSetting("fb_timeout", m_Setting.FBTimeOut);
+		m_Setting.FBTimeOut *= 60;
+		strcpy(tmp, "分钟");
+	}
 	else if (strcmp(explode[0], "断线重连") == 0) {
 		m_Setting.ReConnect = strcmp("是", explode[1]) == 0;
 	}
@@ -1329,6 +1354,10 @@ void Game::PutSetting(wchar_t* name, int v)
 		m_Setting.LoginTimeOut = v;
 		LOGVARN2(64, "cb", "修改.登录超时:%d秒.", v);
 	}
+	else if (wcscmp(name, L"fb_timeout") == 0) {
+		m_Setting.FBTimeOut = v * 60;
+		LOGVARN2(64, "cb", "修改.副本超时:%d分钟.", v);
+	}
 	else if (wcscmp(name, L"qiazhu") == 0) {
 		SendQiaZhuS(v);
 		LOGVARN2(64, "cb", "修改.卡住重启:%d秒.", v);
@@ -1344,7 +1373,7 @@ void Game::PutSetting(wchar_t* name, int v)
 	}
 	else if (wcscmp(name, L"shutdown_sm") == 0) {
 		m_Setting.ShutDown_SM = v;
-		LOGVARN2(64, "cb", "修改.定时关机(开始):%d分钟.", v);
+		LOGVARN2(64, "cb", "修改.定时关机(开始):%d分.", v);
 	}
 	else if (wcscmp(name, L"shutdown_eh") == 0) {
 		m_Setting.ShutDown_EH = v;
@@ -1352,7 +1381,7 @@ void Game::PutSetting(wchar_t* name, int v)
 	}
 	else if (wcscmp(name, L"shutdown_em") == 0) {
 		m_Setting.ShutDown_EM = v;
-		LOGVARN2(64, "cb", "修改.定时关机(结束):%d分钟.", v);
+		LOGVARN2(64, "cb", "修改.定时关机(结束):%d分.", v);
 	}
 	/******** 定时下线 ********/
 	else if (wcscmp(name, L"offline_sh") == 0) {
@@ -1361,7 +1390,7 @@ void Game::PutSetting(wchar_t* name, int v)
 	}
 	else if (wcscmp(name, L"offline_sm") == 0) {
 		m_Setting.OffLine_SM = v;
-		LOGVARN2(64, "cb", "修改.定时下线(开始):%d分钟.", v);
+		LOGVARN2(64, "cb", "修改.定时下线(开始):%d分.", v);
 	}
 	else if (wcscmp(name, L"offline_eh") == 0) {
 		m_Setting.OffLine_EH = v;
@@ -1369,7 +1398,7 @@ void Game::PutSetting(wchar_t* name, int v)
 	}
 	else if (wcscmp(name, L"offline_em") == 0) {
 		m_Setting.OffLine_EM = v;
-		LOGVARN2(64, "cb", "修改.定时下线(结束):%d分钟.", v);
+		LOGVARN2(64, "cb", "修改.定时下线(结束):%d分.", v);
 	}
 	/******** 定时登录 ********/
 	else if (wcscmp(name, L"autologin_sh") == 0) {
@@ -1378,7 +1407,7 @@ void Game::PutSetting(wchar_t* name, int v)
 	}
 	else if (wcscmp(name, L"autologin_sm") == 0) {
 		m_Setting.AutoLogin_SM = v;
-		LOGVARN2(64, "cb", "修改.定时登录(开始):%d分钟.", v);
+		LOGVARN2(64, "cb", "修改.定时登录(开始):%d分.", v);
 	}
 	else if (wcscmp(name, L"autologin_eh") == 0) {
 		m_Setting.AutoLogin_EH = v;
@@ -1386,7 +1415,7 @@ void Game::PutSetting(wchar_t* name, int v)
 	}
 	else if (wcscmp(name, L"autologin_em") == 0) {
 		m_Setting.AutoLogin_EM = v;
-		LOGVARN2(64, "cb", "修改.定时登录(结束):%d分钟.", v);
+		LOGVARN2(64, "cb", "修改.定时登录(结束):%d分.", v);
 	}
 
 	else if (wcscmp(name, L"no_auto_select") == 0) {
@@ -1485,7 +1514,7 @@ void Game::AutoPlay(int index, bool stop)
 		m_pJsCall->SetText("auto_play_btn", "停止登号");
 
 		SetLoginFlag(index);
-		if (!AutoLogin()) {
+		if (!AutoLogin("AutoPlay")) {
 			SetLoginFlag(-2);
 			m_pJsCall->SetText("auto_play_btn", "自动登号");
 			m_pJsCall->SetBtnDisabled("start_btn", 0);
@@ -1615,6 +1644,6 @@ DWORD __stdcall Game::WatchInGame(LPVOID p)
 	Account* account = game->m_pBig;
 	game->m_bLockLogin = false;
 	game->m_pEmulator->WatchInGame(account);
-	if (!game->AutoLogin());
+	if (!game->AutoLogin("WatchInGame"));
 	return 0;
 }

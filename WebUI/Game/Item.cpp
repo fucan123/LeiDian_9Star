@@ -746,11 +746,14 @@ int Item::GetQuickYaoOrBaoNum(int& yaobao, int& yao)
 // 切换到技能快捷栏
 void Item::SwitchMagicQuickBar()
 {
+#if 0
 	m_pGame->m_pPrintScreen->CopyScreenToBitmap(m_pGame->m_hWndBig, 1235, 350, 1245, 360, 0, true);
 	if (m_pGame->m_pPrintScreen->ComparePixel("快捷栏切换按钮", nullptr, 1) == 0) { // 可能是XP技能栏
+		printf("快捷栏切换按钮\n");
 		SwitchQuickBar(1);
 		Sleep(500);
 	}
+#endif
 
 	m_pGame->m_pPrintScreen->CopyScreenToBitmap(m_pGame->m_hWndBig, 926, 510, 936, 520, 0, true);
 	if (m_pGame->m_pPrintScreen->ComparePixel("星辰之眼快捷栏", nullptr, 1)) { // 切换

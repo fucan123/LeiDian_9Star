@@ -49,6 +49,15 @@
                 <li>
                     <label>
                         <span class="content">
+                            <input type="text" name="fb_timeout" value="180" /> (分钟)
+                            <i>(刷副本时间超过此值时, 卡住才检测, 重开副本)</i>
+                        </span>
+                        <span class="title">副本超时 :</span>
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <span class="content">
                             <input type="text" name="qiazhu" value="30" />
                             <i>(卡住多少秒后, 自动重新登录游戏)</i>
                         </span>
@@ -191,6 +200,9 @@
 
     <main>
         <div class="recharge">
+            <span class="ml5">
+                超时: <b id="fb_reopen_count" class="green">0</b>
+            </span>
             <span class="ml5">
                 本次/累计: <b id="fb_count" class="red">0/0</b>
             </span>
