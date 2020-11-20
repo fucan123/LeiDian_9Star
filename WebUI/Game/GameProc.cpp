@@ -90,6 +90,21 @@ void GameProc::SwitchGameAccount(_account_ * account)
 	m_pAccount = account;
 }
 
+// 窗口置前
+void GameProc::SetForegroundWindow(HWND hwnd)
+{
+	//必须动态加载这个函数。  
+	typedef void (WINAPI *PROCSWITCHTOTHISWINDOW)(HWND, BOOL);
+	PROCSWITCHTOTHISWINDOW SwitchToThisWindow;
+	HMODULE hUser32 = GetModuleHandle(L"user32");
+	SwitchToThisWindow = (PROCSWITCHTOTHISWINDOW)
+		GetProcAddress(hUser32, "SwitchToThisWindow");
+
+	//接下来只要用任何现存窗口的句柄调用这个函数即可，
+	//第二个参数表示如果窗口处于最小化状态，是否恢复。
+	SwitchToThisWindow(hwnd, TRUE);
+}
+
 // 神殿去雷鸣大陆流程
 void GameProc::GoLeiMing()
 {
@@ -167,18 +182,21 @@ _account_* GameProc::OpenFB()
 	GoFBDoor(account);
 	int i;
 _start_:
+	if (m_bPause)
+		return account;
+
 	SwitchGameWnd(account->Mnq->Wnd);
 	printf("%s去副本门口\n", account->Name);
 	m_pGame->m_pMove->RunEnd(863, 500, account); //872, 495 这个坐标这里点击副本门
 	Sleep(1000);
 	printf("%s点击副本门\n", account->Name);
 
+
 	CloseTipBox();
 	Click(800, 323); //800, 323 点击副本门
 	Sleep(500);
 	//return account;
 
-	while (m_bPause) Sleep(500);
 	if (!m_pGame->m_pTalk->WaitTalkOpen(0x00)) {
 		if (m_pGame->m_pTalk->IsNeedCheckNPC()) {
 			printf("选择第一个NPC\n");
@@ -377,6 +395,7 @@ void GameProc::ViteInTeam()
 void GameProc::InTeam(_account_* account)
 {
 	printf("%s准备同意入队\n", account->Name);
+	SwitchGameAccount(account);
 	SwitchGameWnd(account->Mnq->Wnd);
 	SetForegroundWindow(account->Mnq->WndTop);
 	AgreenMsg("入队旗帜图标");
@@ -386,19 +405,40 @@ void GameProc::InTeam(_account_* account)
 void GameProc::InFB(_account_* account)
 {
 	printf("%s同意进副本\n", account->Name);
+	for (int i = 1; true; i++) {
+		printf("%d.设置窗口置前:%08X\n", i, account->Mnq->WndTop);
+		SetForegroundWindow(account->Mnq->WndTop);
+		Sleep(1000);
+
+		if (i & 0x01 == 0x00) {
+			RECT rect;
+			::GetWindowRect(account->Mnq->WndTop, &rect);
+			MoveWindow(account->Mnq->WndTop, 6, 100, rect.right - rect.left, rect.bottom - rect.top, FALSE);
+			Sleep(1000);
+			::GetWindowRect(account->Mnq->WndTop, &rect);
+			mouse_event(MOUSEEVENTF_LEFTDOWN, rect.left + 3, rect.top + 3, 0, 0); //点下左键
+			mouse_event(MOUSEEVENTF_LEFTUP, rect.left + 3, rect.top + 3, 0, 0); //点下左键
+			Sleep(1000);
+		}
+
+		HWND top = GetForegroundWindow();
+		if (top == account->Mnq->WndTop || top == account->Mnq->Wnd)
+			break;
+	}
 	int max = 10;
 	for (int i = 1; i <= max; i++) {
 		if (i > 1) {
 			printf("%s第(%d/%d)次尝试同意进副本\n", account->Name, i, max);
 		}
 
+		SwitchGameAccount(account);
 		SwitchGameWnd(account->Mnq->Wnd);
 		SetForegroundWindow(account->Mnq->WndTop);
 		Sleep(500);
 		AgreenMsg("进副本图标");
 		Sleep(5000);
 
-		if (IsInFB(account))
+		if (m_bPause || IsInFB(account))
 			break;
 	}
 	
@@ -427,6 +467,7 @@ void GameProc::AgreenMsg(const char* name, HWND hwnd)
 		if (m_bPause)
 			break;
 
+		SetForegroundWindow(m_pAccount->Mnq->WndTop);
 		int result = AgreenMsg(name, i, false, hwnd);
 		if (result == 1)
 			return;
@@ -600,8 +641,11 @@ void GameProc::ExecInFB()
 			}
 
 			Sleep(1000);
-			printf("点击登录\n");
+			printf("点击进入游戏\n");
 			Click(600, 505, 700, 530);
+			Sleep(2000);
+			printf("点击弹框登录\n");
+			Click(526, 436, 760, 466);
 			printf("等待进入游戏...\n");
 			do {
 				Sleep(1000);
@@ -1395,6 +1439,10 @@ _check_:
 // 技能
 void GameProc::Magic()
 {
+	if (strcmp("诸神裁决", m_pStep->Magic) == 0) {
+		m_pGame->m_pItem->SwitchMagicQuickBar(); // 切换到技能快捷栏
+	}
+
 	for (int i = 1; i <= m_pStep->OpCount; i++) {
 		int result = m_pGame->m_pMagic->UseMagic(m_pStep->Magic, m_pStep->X, m_pStep->Y);
 		if (m_pStep->OpCount == 1) {
@@ -1514,7 +1562,7 @@ void GameProc::PickUp()
 		Sleep(1000);
 	}
 
-	int pickup_count = m_pGame->m_pItem->PickUpItem(m_pStep->Name, m_pStep->X, m_pStep->Y, m_pStep->X2, m_pStep->Y2);
+	int pickup_count = m_pGame->m_pItem->PickUpItem(m_pStep->Name, m_pStep->X, m_pStep->Y, m_pStep->X2, m_pStep->Y2, 15);
 
 	if (strcmp(m_pStep->Name, "30星神兽碎片+3") == 0) {
 		if (pickup_count > 5)

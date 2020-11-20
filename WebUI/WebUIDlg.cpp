@@ -189,6 +189,7 @@ BOOL CWebUIDlg::OnInitDialog()
 
 		HBITMAP bitmap;
 		// 672, 158, 1170, 620
+		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 600, 500, 610, 510, 1000, false); // 聊天窗口2是否打开
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 672, 158, 1170, 620, 100, false); // 背包
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 1150, 75, 1160, 85, 100, false); // 背包, 关闭按钮前面一点
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 145, 85, 155, 95, 100, false); // 物品操作按钮 第一行
@@ -214,11 +215,12 @@ BOOL CWebUIDlg::OnInitDialog()
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 705, 215, 715, 225, 100, false); // 25星XO礼包
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 886, 355, 896, 365, 100, false); // 对话按钮
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 42, 682, 52, 692, 100, false); // 聊天窗口是否打开
+		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 100, 620, 110, 630, 1000, false); // 聊天窗口2是否打开
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 575, 70, 585, 80, 100, false); // 神殿练功场窗口领取经验窗口
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 925, 620, 970, 640, 100, false); // 快捷栏物品数量
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 925, 520, 970, 640, 100, false); // 快捷栏物品数量
 		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 926, 510, 936, 520, 100, false); // 快捷栏物品数量
-		bitmap = ps->CopyScreenToBitmap(RenderWindow, 1235, 350, 1245, 360, 100, false); // 快捷栏切换按钮
+		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 1235, 350, 1245, 360, 100, false); // 快捷栏切换按钮
 		//bitmap = ps.CopyScreenToBitmap(m_pGame->m_hWndBig, 113, 158, 620, 620, 100); // 仓库 
 		//bitmap = ps.CopyScreenToBitmap(RenderWindow, 62, 162, 305, 168, 100, false); // 宠物
 		//bitmap = ps.CopyScreenToBitmap(RenderWindow, 245, 150, 280, 175, 100, false); // 最后一个宠物
@@ -227,6 +229,9 @@ BOOL CWebUIDlg::OnInitDialog()
 		//bitmap = ps.CopyScreenToBitmap(RenderWindow, 1112, 6, 1127, 21, 100, false); // 副本
 		//bitmap = ps.CopyScreenToBitmap(RenderWindow, 1205, 140, 1220, 155, 100, false); // 登录帐号图标
 		//bitmap = ps.CopyScreenToBitmap(RenderWindow, 375, 235, 390, 250, 100, false); // 对话框
+		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 1205, 140, 1220, 155, 1000, false); // 快捷栏切换按钮
+		//bitmap = ps->CopyScreenToBitmap(RenderWindow, 665, 465, 675, 475, 1000, false); // 仓库存钱按钮
+		bitmap = ps->CopyScreenToBitmap(RenderWindow, 500, 380, 510, 390, 1000, false); // 仓库格子解锁取消按钮
 		ps->SaveBitmapToFile(bitmap, L"C:\\Users\\fucan\\Desktop\\MNQ-9Star\\jt.bmp");
 #if 0
 		if (ps.CheckPixel(0xFF18191B)) {
@@ -313,7 +318,7 @@ BOOL CWebUIDlg::OnInitDialog()
 		//HBITMAP bitmap = ps.CopyScreenToBitmap(RenderWindow, 810, 290, 825, 305);
 		ps.SaveBitmapToFile(bitmap, L"C:\\Users\\fucan\\Desktop\\MNQ-9Star\\jt.bmp");
 #endif
-		//while (true) Sleep(1000);
+		while (true) Sleep(1000);
 	}
 
 	CString strURL;//htm文件的全路径

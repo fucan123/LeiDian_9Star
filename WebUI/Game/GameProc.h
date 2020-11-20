@@ -40,6 +40,8 @@ public:
 	void SwitchGameWnd(HWND);
 	// 切换游戏帐号
 	void SwitchGameAccount(_account_* account);
+	// 窗口置前
+	void SetForegroundWindow(HWND hwnd);
 	// 执行
 	void Exec(_account_* account);
 	// 运行

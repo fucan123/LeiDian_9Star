@@ -10,9 +10,9 @@ int main(int argc, char** argv)
 {
 	char path[MAX_PATH], floder[MAX_PATH];
 	GetCurrentDirectoryA(MAX_PATH, path);
-	sprintf_s(floder, "%s\\win7\\wxy.dll", path);
-	printf("当前文件夹:%s\n", floder);
-	//sprintf_s(floder, "E:\\CPP\\OpenglPrintScreen\\x64\\Release\\OpenglPrintScreen.dll");
+	sprintf_s(floder, "%s\\files\\opengl_ps.dll", path);
+	printf("当前文件夹:%s %s\n", floder, argv[1]);
+	//sprintf_s(floder, "E:\\CPP\\OpenglPrintScreen\\Release\\opengl_ps.dll");
 	if (argc == 2) {
 		int pid = atoi(argv[1]);
 		if (InjectDll(pid, floder)) {
@@ -41,6 +41,8 @@ int main(int argc, char** argv)
 	else {
 		printf("WriteXY->参数错误\n");
 	}
+
+	//system("pause");
 	return 0;
 }
 

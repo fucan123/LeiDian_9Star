@@ -105,6 +105,11 @@ void GameStep::SetConsoleTle(const char* cmd)
 // 随机选择步骤文件
 void GameStep::SelectRandStep()
 {
+	int i;
+	for (i = 0; i < MAX_STEP_FILES; i++) {
+		m_nStepRandListIndex[i] = i;
+	}
+
 	if (m_nStepCount == 1) { // 只有一份文件
 		m_nStepRandIndex = 0;
 	}
@@ -114,10 +119,6 @@ void GameStep::SelectRandStep()
 				m_nStepRandIndex = -1;
 		}
 		if (m_nStepRandIndex == -1) { // 未初始化或已用完
-			int i;
-			for (i = 0; i < MAX_STEP_FILES; i++) {
-				m_nStepRandListIndex[i] = i;
-			}
 			for (i = 0; i < m_nStepCount - 1; i++) { // 打乱
 				int index = MyRand(0, m_nStepCount - 1);
 				int tmp = m_nStepRandListIndex[i];

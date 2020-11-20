@@ -172,7 +172,7 @@ bool GameData::FindPlayerAddr()
 
 	// 4:0x00000000 4:0x0000DECE 4:0x00000000 4:0x00000001 4:0x00000000 4:0x00000030 4:0x00000000 4:0x0000DECE 4:0x00000000 4:0x00000001 4:0x00000000 4:0x00000030
 	DWORD codes[] = {
-		0x072CE498, 0x00000000, 0xFFFFFFFF, 0x3F800000,
+		0x073078A8, 0x00000000, 0xFFFFFFFF, 0x3F800000,
 		0x00010001, 0x00000011, 0x00000011, 0x00000011,
 	};
 	DWORD address = 0;
@@ -185,7 +185,7 @@ bool GameData::FindPlayerAddr()
 		m_DataAddr.LifeMax = m_DataAddr.Player + LIFE_MAX_OFFSET;
 
 		LOGVARN2(32, "blue", "人物首地址:%08X", m_DataAddr.Player);
-		::printf("人物首地址:%08X\n", m_DataAddr.Player);
+		printf("人物首地址:%08X\n", m_DataAddr.Player);
 	}
 
 	return address != 0;
@@ -196,9 +196,9 @@ bool GameData::FindMoveCoorAddr()
 {
 	// 4:0x00000000 4:0x00000000 4:0x00000000 4:0x07328EF4 4:0x07328EF4
 	DWORD codes[] = {
-		0x00000011, 0x00000011, 0x00000000, 0x00000000,
-		0x073330A0, 0x07333098, 0x00000000, 0x00000022,
-		0x00000022, 0x00000022, 0x00000011, 0x00000000,
+		0x00000000, 0x00000000, 0x00000000, 0x00000011,
+		0x07361004, 0x07361004, 0x00000000, 0x00000011,
+		0x00000011, 0x00000011, 0x00000001, 0x00000011,
 	};
 	DWORD address = 0;
 	if (SearchCode(codes, sizeof(codes) / sizeof(DWORD), &address)) {
@@ -206,7 +206,7 @@ bool GameData::FindMoveCoorAddr()
 		m_DataAddr.MoveY = m_DataAddr.MoveX + 4;
 
 		LOGVARN2(32, "blue", "目的地坐标地址:%08X", m_DataAddr.MoveX);
-		::printf("目的地坐标地址:%08X\n", m_DataAddr.MoveX);
+		printf("目的地坐标地址:%08X\n", m_DataAddr.MoveX);
 	}
 
 	return address != 0;

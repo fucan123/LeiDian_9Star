@@ -264,6 +264,11 @@ void Emulator::WatchInGame(_account_* account)
 				Tap(1205, 155, m->Index);
 				Sleep(1000);
 
+				printf("µã»÷ÆäËûÕËºÅµÇÂ¼\n");
+				LOGVARP2(log, "blue", "µã»÷ÆäËûÕËºÅµÇÂ¼");
+				Tap(660, 518, m->Index);
+				Sleep(1000);
+
 				printf("Ë«»÷ÕËºÅ¿ò\n");
 				LOGVARP2(log, "blue", "Ë«»÷ÕËºÅ¿ò");
 				m_pGame->m_pGameProc->DBClick(520, 230, m->Wnd);
